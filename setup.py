@@ -3,9 +3,9 @@ from setuptools import setup
 setup(name='miniflow',
       version='0.1',
       description='something',
-      url='http://github.com/storborg/funniest',
+      url='https://github.com/sbartek/miniflow',
       author='Flying Circus',
-      author_email='flyingcircus@example.com',
+      author_email='bartekskorulski@gmail.com',
       license='MIT',
-      packages=['funniest'],
+      packages=['miniflow'],
       zip_safe=False)
