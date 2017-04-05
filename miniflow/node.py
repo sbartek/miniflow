@@ -9,6 +9,16 @@ class Node:
         # For each inbound Node here, add this Node as an outbound Node to _that_ Node.
         for n in self.inbound_nodes:
             n.outbound_nodes.append(self)
+        self.value = None
+
+    def forward(self):
+        """
+        Forward propagation.
+
+        Compute the output value based on `inbound_nodes` and
+        store the result in self.value.
+        """
+        raise NotImplemented
 
     def __str__(self):
         out = f'inound nodes: {len(self.inbound_nodes)} '

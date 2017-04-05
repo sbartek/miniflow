@@ -8,3 +8,5 @@ print(n1)
 
 print(" node 2")
 print(n2)
+
+n1.forward()

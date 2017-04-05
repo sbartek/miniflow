@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='miniflow',
-      version='0.1',
+      version='0.1.1',
       description='something',
       url='https://github.com/sbartek/miniflow',
       author='Flying Circus',
