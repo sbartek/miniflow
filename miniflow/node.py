@@ -54,3 +54,4 @@ class Add(Node):
         """
         You'll be writing code here in the next quiz!
         """
+        rise NotImplemented
