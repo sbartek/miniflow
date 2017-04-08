@@ -1,7 +1,10 @@
 from hamcrest import *
 import unittest
+import numpy as np
 
-from miniflow import Input, Add, Mul, topological_sort, forward_pass
+
+from miniflow import Input, Add, Mul, Linear\
+     , topological_sort, forward_pass
 
 class AddTest(unittest.TestCase):
 
@@ -48,5 +51,51 @@ class AddTest(unittest.TestCase):
         # should output 400
         assert_that(output, equal_to(400))
 
+    def test_linear(self):
+        """
+        NOTE: Here we're using an Input node for more than a scalar.
+        In the case of weights and inputs the value of the Input node is
+        actually a python list!
+
+        In general, there's no restriction on the values that can be passed to an Input node.
+        """
+
+
+        inputs, weights, bias = Input(), Input(), Input()
+
+        f = Linear(inputs, weights, bias)
+
+        feed_dict = {
+            inputs: np.array([6, 14, 3]),
+            weights: np.array([0.5, 0.25, 1.4]),
+            bias: 2
+        }
+
+        graph = topological_sort(feed_dict)
+        output = forward_pass(f, graph)
+
+        # should be 12.7 with this example
+        assert_that(output, equal_to(12.7))
+
+
+    def test_multilinear(self):
+        X, W, b = Input(), Input(), Input()
+
+        f = Linear(X, W, b)
+
+        X_ = np.array([[-1., -2.], [-1, -2]])
+        W_ = np.array([[2., -3], [2., -3]])
+        b_ = np.array([-3., -5])
+
+        feed_dict = {X: X_, W: W_, b: b_}
+
+        graph = topological_sort(feed_dict)
+        output = forward_pass(f, graph)
+
+        out = np.array([[-9., 4.], [-9., 4.]])
+        ##assert_that(output, equal_to(out))
+        assert_that(output[1, 1], equal_to(out[1, 1]))
+        assert_that(output[1, 0], equal_to(out[1, 0]))
+        
 
     

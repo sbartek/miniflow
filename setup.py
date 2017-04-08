@@ -8,4 +8,8 @@ setup(name='miniflow',
       author_email='bartekskorulski@gmail.com',
       license='MIT',
       packages=['miniflow'],
+      install_requires=[
+          'numpy',
+          'pyhamcrest'
+      ],
       zip_safe=False)
