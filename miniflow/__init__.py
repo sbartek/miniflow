@@ -5,3 +5,4 @@ from .forward_pass import forward_pass
 from .mul import Mul
 from .linear import Linear
 from .sigmoid import Sigmoid
+from .mse import MSE
