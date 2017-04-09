@@ -1,3 +1,5 @@
+import numpy as np
+
 from .node import Node
 
 class MSE(Node):
@@ -6,10 +8,7 @@ class MSE(Node):
         super().__init__([y, a])
 
     def forward(self):
-        y = self.inbound_nodes[0].value
-        a = self.inbound_nodes[1].value
-        self.value = sum((y-a)**2)/len(y)
-
+        
         # NOTE: We reshape these to avoid possible matrix/vector broadcast
         # errors.
         #
@@ -21,4 +20,21 @@ class MSE(Node):
         # an elementwise subtraction as expected.
         #y = self.inbound_nodes[0].value.reshape(-1, 1)
         #a = self.inbound_nodes[1].value.reshape(-1, 1)
+
+        y = self.inbound_nodes[0].value.reshape(-1, 1)
+        a = self.inbound_nodes[1].value.reshape(-1, 1)
+
+        self.m = self.inbound_nodes[0].value.shape[0]
+        # Save the computed output for backward.
+        self.diff = y - a
+        self.value = np.mean(self.diff**2)
         
+    def backward(self):
+        """
+        Calculates the gradient of the cost.
+
+        This is the final node of the network so outbound nodes
+        are not a concern.
+        """
+        self.gradients[self.inbound_nodes[0]] = (2 / self.m) * self.diff
+        self.gradients[self.inbound_nodes[1]] = (-2 / self.m) * self.diff

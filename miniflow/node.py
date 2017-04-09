@@ -6,11 +6,14 @@ class Node:
         self.inbound_nodes = inbound_nodes
         # Node(s) to which this Node passes values
         self.outbound_nodes = []
-        # For each inbound Node here, add this Node as an outbound Node to _that_ Node.
+        # For each inbound Node here,
+        # add this Node as an outbound Node to _that_ Node.
         for n in self.inbound_nodes:
             n.outbound_nodes.append(self)
+        # value will be calculated during forward pass
         self.value = None
-
+        self.gradients = {}
+        
     def forward(self):
         """
         Forward propagation.
@@ -20,6 +23,13 @@ class Node:
         """
         raise NotImplemented
 
+    def backward(self):
+        """
+        Every node that uses this class as a base class will
+        need to define its own `backward` method.
+        """
+        raise NotImplementedError
+    
     def __str__(self):
         out = f'inound nodes: {len(self.inbound_nodes)} '
         for in_node in self.inbound_nodes:
