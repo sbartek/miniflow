@@ -6,3 +6,5 @@ from .mul import Mul
 from .linear import Linear
 from .sigmoid import Sigmoid
 from .mse import MSE
+from .forward_and_backward import forward_and_backward
+from .sgd import sgd_update
